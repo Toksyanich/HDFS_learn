@@ -5,10 +5,10 @@ FROM ubuntu:24.04
 # JAVA
 ####################
 
-ENV JAVA_HOME		/usr/lib/jvm/java-8-openjdk-amd64
+ENV JAVA_HOME		/usr/lib/jvm/java-11-openjdk-amd64
 
 RUN apt-get update && \
-    DEBIAN_FRONTEND=noninteractive apt-get install -y openjdk-8-jdk && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y ca-certificates openjdk-11-jdk && \
     rm -rf /var/lib/apt/lists/*
 
 
@@ -28,7 +28,7 @@ ENV YARN_NODEMANAGER_USER root
 
 RUN apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y wget libzip4 libsnappy1v5 libssl-dev && \
-    wget http://archive.apache.org/dist/hadoop/core/hadoop-$HADOOP_VERSION/hadoop-$HADOOP_VERSION.tar.gz && \
+    wget https://archive.apache.org/dist/hadoop/core/hadoop-$HADOOP_VERSION/hadoop-$HADOOP_VERSION.tar.gz && \
     apt-get remove -y wget && \
     rm -rf /var/lib/apt/lists/* && \
     tar -zxf /hadoop-$HADOOP_VERSION.tar.gz && \
