@@ -1,7 +1,7 @@
 version: "3.7"
 services:
   namenode:
-    image: apache-hadoop:3.3.6
+    image: apache/hadoop:3.3.6
     environment:
       - HDFS_NAMENODE_USER=root
       - HDFS_DATANODE_USER=root
@@ -13,9 +13,11 @@ services:
     command: >
       bash -lc "hdfs namenode & yarn resourcemanager"
     hostname: hdfs-namenode
+    volumes:
+      - ./conf:/opt/hadoop/etc/hadoop:ro
 
   datanode:
-    image: apache-hadoop:3.3.6
+    image: apache/hadoop:3.3.6
     environment:
       - HDFS_NAMENODE_USER=root
       - HDFS_DATANODE_USER=root
@@ -30,9 +32,11 @@ services:
       - "9864"
     links:
       - namenode:hdfs-namenode
+    volumes:
+      - ./conf:/opt/hadoop/etc/hadoop:ro
 
   secondarynamenode:
-    image: apache-hadoop:3.3.6
+    image: apache/hadoop:3.3.6
     environment:
       - HDFS_NAMENODE_USER=root
       - HDFS_DATANODE_USER=root
@@ -43,3 +47,5 @@ services:
       - "9868:9868"
     links:
       - namenode:hdfs-namenode
+    volumes:
+      - ./conf:/opt/hadoop/etc/hadoop:ro
